@@ -1,12 +1,19 @@
 from langchain_community.chat_models import ChatOllama
-from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.prompts import FewShotChatMessagePromptTemplate
 from langchain_teddynote.messages import stream_response
-
+import os
 
 # Ollama 모델을 불러옵니다.
-llm = ChatOllama(model="llama3.1:8b")
+# llm = ChatOllama(model="llama3.1:8b")
+# Ollama 모델을 불러옵니다.
+# OpenAI API Key
+os.environ["OPENAI_API_KEY"] = (
+	""
+)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.0)
+
 
 examples = [
     {

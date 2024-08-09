@@ -6,16 +6,16 @@ from langchain_teddynote.messages import stream_response
 
 
 # Ollama 모델을 불러옵니다.
-llm = ChatOllama(model="eeve:latest")
+llm = ChatOllama(model="llama3.1:8b")
 
 examples = [
     {
-        "input": '"자동차"',
-        "output": '"car"'
+        "input": '"car"',
+        "output": '"자동차"'
     },
     {
-        "input": '"길고양이에게 먹이를 줘도 되는가?"',
-        "output": '"Is it okay to feed stray cats?"'
+        "input": '"Is it okay to feed stray cats?"',
+        "output": '"길고양이에게 먹이를 줘도 되는가?"'
     }
 ]
 # 요약을 위한 프롬프트 템플릿 정의
@@ -35,14 +35,14 @@ few_shot_prompt = FewShotChatMessagePromptTemplate(
 # 최종 prompt 
 final_prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "You are an AI bot that translates Korean to English."),
+        ("system", "You are an AI bot that translates a given English sentence into Korean and outputs the result in quotation marks."),
         few_shot_prompt,
         ("human", "{input}")
     ]
 )
 
 # 요약할 텍스트 정의
-input_instruct='"전국 의대생의 정원을 늘리는 것이 타당한가?"'
+input_instruct='"You are an AI bot that translates a given English sentence into Korean and outputs the result in double quotation marks."'
 stream_response(llm.stream(final_prompt.format_messages(input=input_instruct)))
 
 
